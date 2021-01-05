@@ -4,6 +4,11 @@
     <h3>Title: {{ professor.title }}</h3>
     <h3>School: {{ professor.school }}</h3>
     <h3>Department: {{ professor.department }}</h3>
+    <h3>Reviews:</h3>
+    <div v-for="review in professor.reviews">
+      <h4>Rating: {{ review.rating }}</h4>
+      <h4>{{ review.text }}</h4>
+    </div>
   </div>
 </template>
 
@@ -21,9 +26,11 @@ export default {
   },
   created: function() {
     axios.get(`/professors/${this.$route.params.id}`).then((response) => {
-      console.log(response.data), (this.professor = response.data[0]);
+      console.log(response.data), (this.professor = response.data.professor[0]);
     });
   },
-  methods: {},
+  methods: {
+    reviewsIndex: function() {},
+  },
 };
 </script>
