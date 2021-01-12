@@ -4,6 +4,7 @@
     <h3>Title: {{ professor.title }}</h3>
     <h3>School: {{ professor.school }}</h3>
     <h3>Department: {{ professor.department }}</h3>
+    <button v-on:click="destroyProfessor()">Delete this Professor</button>
     <h3>Reviews:</h3>
     <div v-for="review in professor.reviews">
       <h4>Rating: {{ review.rating }}</h4>
@@ -66,6 +67,13 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
+        });
+    },
+    destroyProfessor: function() {
+      axios
+        .delete(`/professors/${this.professor.professor_id}`)
+        .then((response) => {
+          this.$router.push("/professors");
         });
     },
   },
