@@ -9,6 +9,24 @@
       <h4>Rating: {{ review.rating }}</h4>
       <h4>{{ review.text }}</h4>
     </div>
+    <button v-on:click="reviewsFormToggle = !reviewsFormToggle">
+      Add a Review!
+    </button>
+    <div v-if="reviewsFormToggle === true">
+      <form v-on:submit="createReview()">
+        <ul>
+          <li>
+            <label>Review Description:</label>
+            <input type="text" v-model="newText" />
+          </li>
+          <li>
+            <label>Rating:</label>
+            <input type="number" v-model="newRating" />
+          </li>
+        </ul>
+        <button type="submit">Submit Your Review!</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -21,6 +39,9 @@ export default {
   data: function() {
     return {
       professor: {},
+      reviewsFormToggle: false,
+      newReview: "",
+      newText: "",
       error: [],
     };
   },
@@ -31,6 +52,22 @@ export default {
   },
   methods: {
     reviewsIndex: function() {},
+    createReview: function() {
+      var params = {
+        professor_id: this.professor.professor_id,
+        text: this.newText,
+        rating: this.newRating,
+      };
+      axios
+        .post("/reviews", params)
+        .then((response) => {
+          console.log(response);
+          this.professor.reviews.push(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
   },
 };
 </script>
