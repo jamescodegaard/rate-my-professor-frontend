@@ -23,7 +23,7 @@
           <input type="text" v-model="newTitle" />
         </li>
       </ul>
-      <button v-on:click="createProfessor()">Create the Professor!!</button>
+      <button type="submit">Create the Professor!!</button>
     </form>
   </div>
 </template>
@@ -55,7 +55,7 @@ export default {
         .post("/professors", params)
         .then((response) => {
           console.log(response.data);
-          this.$router.push(`/professors/${response.data.professor_id})`);
+          this.$router.push(`/professors/${response.data.professor_id}`);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
