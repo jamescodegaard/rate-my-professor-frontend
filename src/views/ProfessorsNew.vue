@@ -40,7 +40,6 @@ export default {
       newDepartment: "",
       newTitle: "",
       errors: [],
-      
     };
   },
   methods: {
@@ -55,9 +54,8 @@ export default {
       axios
         .post("/professors", params)
         .then((response) => {
-          this.$router.push(
-            `/professors/${response.data.professor.professor_id})`
-          );
+          console.log(response.data);
+          this.$router.push(`/professors/${response.data.professor_id})`);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
