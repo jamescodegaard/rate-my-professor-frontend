@@ -9,6 +9,9 @@
         >See Reviews</router-link
       >
     </div>
+    <router-link :to="{ name: 'professors-new' }"
+      >Add a professor!!</router-link
+    >
   </div>
 </template>
 
