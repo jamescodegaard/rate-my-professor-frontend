@@ -4,10 +4,12 @@
     <h3>Title: {{ professor.title }}</h3>
     <h3>School: {{ professor.school }}</h3>
     <h3>Department: {{ professor.department }}</h3>
+    <button v-on:click="destroyProfessor()">Delete this Professor</button>
     <h3>Reviews:</h3>
     <div v-for="review in professor.reviews">
       <h4>Rating: {{ review.rating }}</h4>
       <h4>{{ review.text }}</h4>
+      <button v-on:click="destroyReview(review)">Delete Review</button>
     </div>
     <button v-on:click="reviewsFormToggle = !reviewsFormToggle">
       Add a Review!
@@ -67,6 +69,19 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    destroyProfessor: function() {
+      axios
+        .delete(`/professors/${this.professor.professor_id}`)
+        .then((response) => {
+          this.$router.push("/professors");
+        });
+    },
+    destroyReview: function(review) {
+      var index = this.professor.reviews.indexOf(review);
+      axios.delete(`/reviews/${review.review_id}`).then((response) => {
+        this.professor.reviews.splice(index, 1);
+      });
     },
   },
 };
