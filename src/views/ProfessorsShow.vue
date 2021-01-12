@@ -9,6 +9,7 @@
     <div v-for="review in professor.reviews">
       <h4>Rating: {{ review.rating }}</h4>
       <h4>{{ review.text }}</h4>
+      <button v-on:click="destroyReview(review)">Delete Review</button>
     </div>
     <button v-on:click="reviewsFormToggle = !reviewsFormToggle">
       Add a Review!
@@ -75,6 +76,12 @@ export default {
         .then((response) => {
           this.$router.push("/professors");
         });
+    },
+    destroyReview: function(review) {
+      var index = this.professor.reviews.indexOf(review);
+      axios.delete(`/reviews/${review.review_id}`).then((response) => {
+        this.professor.reviews.splice(index, 1);
+      });
     },
   },
 };
