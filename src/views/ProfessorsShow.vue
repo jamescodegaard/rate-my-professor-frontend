@@ -12,7 +12,25 @@
     <div v-for="review in professor.reviews">
       <h4>Rating: {{ review.rating }}</h4>
       <h4>{{ review.text }}</h4>
+      <button v-on:click="updateReviewFormToggle = review.review_id">
+        Edit Review
+      </button>
       <button v-on:click="destroyReview(review)">Delete Review</button>
+      <div v-if="updateReviewFormToggle === review.review_id">
+        <form v-on:submit.prevent="updateReview(review)">
+          <ul>
+            <li>
+              <label>Text:</label>
+              <input type="text" v-model="review.text" />
+            </li>
+            <li>
+              <label>Rating:</label>
+              <input type="text" v-model="review.rating" />
+            </li>
+          </ul>
+          <button type="submit">Update Review!!</button>
+        </form>
+      </div>
     </div>
     <button v-on:click="reviewsFormToggle = !reviewsFormToggle">
       Add a Review!
@@ -73,6 +91,7 @@ export default {
       professor: {},
       reviewsFormToggle: false,
       updateProfessorFormToggle: false,
+      updateReviewFormToggle: null,
       newReview: "",
       newText: "",
       error: [],
@@ -84,7 +103,6 @@ export default {
     });
   },
   methods: {
-    reviewsIndex: function() {},
     createReview: function() {
       var params = {
         professor_id: this.professor.professor_id,
@@ -113,7 +131,25 @@ export default {
         .put(`/professors/${this.professor.professor_id}`, params)
         .then((response) => {
           console.log(response.data);
-          // this.professor = response.data;
+          this.updateProfessorFormToggle = false;
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    updateReview: function(review) {
+      // var index = this.professor.reviews.indexOf(review);
+      var params = {
+        professor_id: this.professor.professor_id,
+        text: review.text,
+        rating: review.rating,
+      };
+      axios
+        .put(`/reviews/${review.review_id}`, params)
+        .then((response) => {
+          console.log(response.data);
+          // this.professor.reviews[index] = response.data;
+          this.updateReviewFormToggle = null;
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
