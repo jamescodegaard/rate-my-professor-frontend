@@ -56,7 +56,7 @@
             <input type="text" v-model="professor.title" />
           </li>
         </ul>
-        <button type="submit">Create the Professor!!</button>
+        <button type="submit">Update Professor!!</button>
       </form>
     </div>
   </div>
@@ -75,11 +75,6 @@ export default {
       updateProfessorFormToggle: false,
       newReview: "",
       newText: "",
-      first_name: "",
-      last_name: "",
-      school: "",
-      department: "",
-      title: "",
       error: [],
     };
   },
@@ -108,17 +103,17 @@ export default {
     },
     updateProfessor: function() {
       var params = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        school: this.school,
-        department: this.department,
-        title: this.title,
+        first_name: this.professor.first_name,
+        last_name: this.professor.last_name,
+        school: this.professor.school,
+        department: this.professor.department,
+        title: this.professor.title,
       };
       axios
-        .patch(`/proessors/${this.professor.professor_id}`, params)
+        .put(`/professors/${this.professor.professor_id}`, params)
         .then((response) => {
-          console.log(response);
-          this.professor = response.data;
+          console.log(response.data);
+          // this.professor = response.data;
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
