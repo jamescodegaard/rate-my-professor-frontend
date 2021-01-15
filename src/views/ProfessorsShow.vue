@@ -4,6 +4,9 @@
     <h3>Title: {{ professor.title }}</h3>
     <h3>School: {{ professor.school }}</h3>
     <h3>Department: {{ professor.department }}</h3>
+    <button v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle">
+      Update professor info
+    </button>
     <button v-on:click="destroyProfessor()">Delete this Professor</button>
     <h3>Reviews:</h3>
     <div v-for="review in professor.reviews">
@@ -29,6 +32,33 @@
         <button type="submit">Submit Your Review!</button>
       </form>
     </div>
+    <div v-if="updateProfessorFormToggle === true">
+      <form v-on:submit.prevent="updateProfessor()">
+        <ul>
+          <li>
+            <label>First Name:</label>
+            <input type="text" v-model="professor.first_name" />
+          </li>
+          <li>
+            <label>Last Name:</label>
+            <input type="text" v-model="professor.last_name" />
+          </li>
+          <li>
+            <label>School:</label>
+            <input type="text" v-model="professor.school" />
+          </li>
+          <li>
+            <label>Department:</label>
+            <input type="text" v-model="professor.department" />
+          </li>
+          <li>
+            <label>Title:</label>
+            <input type="text" v-model="professor.title" />
+          </li>
+        </ul>
+        <button type="submit">Create the Professor!!</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -42,8 +72,14 @@ export default {
     return {
       professor: {},
       reviewsFormToggle: false,
+      updateProfessorFormToggle: false,
       newReview: "",
       newText: "",
+      first_name: "",
+      last_name: "",
+      school: "",
+      department: "",
+      title: "",
       error: [],
     };
   },
@@ -65,6 +101,24 @@ export default {
         .then((response) => {
           console.log(response);
           this.professor.reviews.push(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    updateProfessor: function() {
+      var params = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        school: this.school,
+        department: this.department,
+        title: this.title,
+      };
+      axios
+        .patch(`/proessors/${this.professor.professor_id}`, params)
+        .then((response) => {
+          console.log(response);
+          this.professor = response.data;
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
