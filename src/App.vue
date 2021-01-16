@@ -1,8 +1,24 @@
 <template>
   <div id="app">
     <div id="nav">
-      <!-- <router-link to="/">Home</router-link> | -->
-      <router-link to="/professors">Professors</router-link>
+      <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+          <router-link to="/professors" class="navbar-brand"
+            >Professors</router-link
+          >
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-light btn-outline-secondary" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </nav>
     </div>
     <router-view />
   </div>
