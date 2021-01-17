@@ -7,7 +7,7 @@
         <h3>School: {{ professor.school }}</h3>
         <h3>Department: {{ professor.department }}</h3>
         <button
-          class="btn btn-light btn-outline-secondary border-info mt-4"
+          class="btn btn-light btn-outline-secondary border-info mt-1"
           v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle"
         >
           Update professor info
@@ -87,9 +87,10 @@
           </div>
         </div>
       </div>
-
-      <h3>Reviews:</h3>
-      <div class="row row-cols-1 row-cols-md-3 g-4 gy-3 mt-1">
+      <div class="mt-4">
+        <h3>Reviews:</h3>
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 gy-3">
         <div class="col" v-for="review in professor.reviews">
           <div class="card text-dark bg-light border-info">
             <div class="card-body">
@@ -98,29 +99,59 @@
                 <h5><strong>Rating: </strong>{{ review.rating }}</h5>
                 <p>{{ review.text }}</p>
                 <button
-                  class="btn btn-light btn-outline-secondary border-info mt-2"
+                  class="btn btn-light btn-outline-secondary btn-sm border-info mt-2"
                   v-on:click="destroyReview(review)"
                 >
                   Delete Review
                 </button>
                 <button
-                  class="btn btn-light btn-outline-secondary border-info mt-4"
-                  v-on:click="updateReviewFormToggle = review.review_id"
+                  class="btn btn-light btn-outline-secondary btn-sm border-info mt-4 mb-2"
+                  v-on:click="
+                    (updateReviewFormToggle = !updateReviewFormToggle),
+                      (updateReviewID = review.review_id)
+                  "
                 >
                   Edit Review
                 </button>
-                <div v-if="updateReviewFormToggle === review.review_id">
-                  <form v-on:submit.prevent="updateReview(review)">
-                    <label>Text:</label>
-                    <input type="text" v-model="review.text" />
-                    <label>Rating:</label>
-                    <input type="text" v-model="review.rating" />
+                <div
+                  v-if="
+                    updateReviewID === review.review_id &&
+                      updateReviewFormToggle === true
+                  "
+                >
+                  <form
+                    class="row g-3"
+                    v-on:submit.prevent="updateReview(review)"
+                  >
+                    <label class="form-label">Text:</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="review.text"
+                    />
+                    <label class="form-label"
+                      >Rating: {{ review.rating }}</label
+                    >
+                    <input
+                      type="range"
+                      class="form-range"
+                      min="1"
+                      max="5"
+                      v-model="review.rating"
+                    />
                     <button
-                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      class="btn btn-light btn-outline-secondary btn-sm border-info mt-1"
                       type="submit"
                     >
-                      Update Review!!
-                    </button>
+                      Update Review!!</button
+                    ><button
+                      type="button"
+                      class="btn-close"
+                      aria-label="Close"
+                      v-on:click="
+                        updateReviewFormToggle = !updateReviewFormToggle
+                      "
+                    ></button>
                   </form>
                 </div>
               </div>
@@ -142,11 +173,26 @@
                 <h5 class="card-title"></h5>
                 <div class="card-text">
                   <form v-on:submit="createReview()">
-                    <label>Review Description:</label>
-                    <input type="text" v-model="newText" />
+                    <div class="col-md-4">
+                      <label>Review Description:</label>
+                      <input type="text" v-model="newText" />
+                    </div>
 
-                    <label>Rating:</label>
-                    <input type="number" v-model="newRating" />
+                    <div class="col-md-4">
+                      <label class="form-label" for="ratingRange">
+                        Rating: {{ newRating }}
+                      </label>
+                      <div class="range">
+                        <input
+                          type="range"
+                          class="form-range"
+                          min="1"
+                          max="5"
+                          id="ratingRange"
+                          v-model="newRating"
+                        />
+                      </div>
+                    </div>
 
                     <button
                       class="btn btn-light btn-outline-secondary border-info mt-4"
@@ -202,8 +248,10 @@ export default {
       professor: {},
       reviewsFormToggle: false,
       updateProfessorFormToggle: false,
-      updateReviewFormToggle: null,
+      updateReviewFormToggle: false,
+      updateReviewID: null,
       newReview: "",
+      newRating: "",
       newText: "",
       error: [],
     };
