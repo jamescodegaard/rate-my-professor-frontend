@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <nav class="navbar navbar-dark bg-primary">
+      <nav class="navbar navbar-dark bg-info">
         <div class="container-fluid">
           <router-link to="/professors" class="navbar-brand"
             >Professors</router-link
@@ -20,6 +20,7 @@
         </div>
       </nav>
     </div>
+
     <router-view />
   </div>
 </template>
