@@ -12,7 +12,14 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              v-model="nameFilter"
+              list="lastNames"
             />
+            <datalist id="lastNames">
+              <option v-for="professor in professors">{{
+                professor.last_name
+              }}</option>
+            </datalist>
             <button class="btn btn-light btn-outline-secondary" type="submit">
               Search
             </button>
@@ -47,3 +54,22 @@
   color: #42b983;
 } */
 </style>
+
+<script>
+import axios from "axios";
+import Vue2Filters from "vue2-filters";
+
+export default {
+  data: function() {
+    return {
+      professors: [],
+      nameFilter: "",
+      sortAttribute: "nameFilter",
+      error: [],
+    };
+  },
+  created: function() {},
+  mixins: [Vue2Filters.mixin],
+  methods: {},
+};
+</script>
