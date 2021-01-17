@@ -1,81 +1,192 @@
 <template>
   <div class="professors-show">
-    <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
-    <h3>Title: {{ professor.title }}</h3>
-    <h3>School: {{ professor.school }}</h3>
-    <h3>Department: {{ professor.department }}</h3>
-    <button v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle">
-      Update professor info
-    </button>
-    <button v-on:click="destroyProfessor()">Delete this Professor</button>
-    <h3>Reviews:</h3>
-    <div v-for="review in professor.reviews">
-      <h4>Rating: {{ review.rating }}</h4>
-      <h4>{{ review.text }}</h4>
-      <button v-on:click="updateReviewFormToggle = review.review_id">
-        Edit Review
-      </button>
-      <button v-on:click="destroyReview(review)">Delete Review</button>
-      <div v-if="updateReviewFormToggle === review.review_id">
-        <form v-on:submit.prevent="updateReview(review)">
-          <ul>
-            <li>
-              <label>Text:</label>
-              <input type="text" v-model="review.text" />
-            </li>
-            <li>
-              <label>Rating:</label>
-              <input type="text" v-model="review.rating" />
-            </li>
-          </ul>
-          <button type="submit">Update Review!!</button>
-        </form>
+    <div class="container text-center">
+      <div class="mt-3">
+        <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
+        <h3>Title: {{ professor.title }}</h3>
+        <h3>School: {{ professor.school }}</h3>
+        <h3>Department: {{ professor.department }}</h3>
+        <button
+          class="btn btn-light btn-outline-secondary border-info mt-4"
+          v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle"
+        >
+          Update professor info
+        </button>
       </div>
-    </div>
-    <button v-on:click="reviewsFormToggle = !reviewsFormToggle">
-      Add a Review!
-    </button>
-    <div v-if="reviewsFormToggle === true">
-      <form v-on:submit="createReview()">
-        <ul>
-          <li>
-            <label>Review Description:</label>
-            <input type="text" v-model="newText" />
-          </li>
-          <li>
-            <label>Rating:</label>
-            <input type="number" v-model="newRating" />
-          </li>
-        </ul>
-        <button type="submit">Submit Your Review!</button>
-      </form>
-    </div>
-    <div v-if="updateProfessorFormToggle === true">
-      <form v-on:submit.prevent="updateProfessor()">
-        <ul>
-          <li>
-            <label>First Name:</label>
-            <input type="text" v-model="professor.first_name" />
-          </li>
-          <li>
-            <label>Last Name:</label>
-            <input type="text" v-model="professor.last_name" />
-          </li>
-          <li>
-            <label>School:</label>
-            <input type="text" v-model="professor.school" />
-          </li>
-          <li>
-            <label>Department:</label>
-            <input type="text" v-model="professor.department" />
-          </li>
-          <li>
-            <label>Title:</label>
-            <input type="text" v-model="professor.title" />
-          </li>
-        </ul>
-        <button type="submit">Update Professor!!</button>
-      </form>
+
+      <div v-if="updateProfessorFormToggle === true">
+        <div class="row row-cols-1 g-4 gy-3 mt-1">
+          <div class="col">
+            <div class="card text-dark bg-light border-info">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+                <div class="card-text">
+                  <form class="row g-3" v-on:submit.prevent="updateProfessor()">
+                    <div class="col-md-6">
+                      <label class="form-label">First Name: </label>
+
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="professor.first_name"
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label">Last Name: </label>
+
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="professor.last_name"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label">School: </label>
+
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="professor.school"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Department: </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="professor.department"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Title: </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="professor.title"
+                      />
+                    </div>
+
+                    <button
+                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      type="submit"
+                    >
+                      Update Professor!!
+                    </button>
+                  </form>
+                  <button
+                    class="btn btn-light btn-outline-secondary border-info mt-4"
+                    v-on:click="destroyProfessor()"
+                  >
+                    Delete this Professor
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Reviews:</h3>
+      <div class="row row-cols-1 row-cols-md-3 g-4 gy-3 mt-1">
+        <div class="col" v-for="review in professor.reviews">
+          <div class="card text-dark bg-light border-info">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <div class="card-text">
+                <h5><strong>Rating: </strong>{{ review.rating }}</h5>
+                <p>{{ review.text }}</p>
+                <button
+                  class="btn btn-light btn-outline-secondary border-info mt-2"
+                  v-on:click="destroyReview(review)"
+                >
+                  Delete Review
+                </button>
+                <button
+                  class="btn btn-light btn-outline-secondary border-info mt-4"
+                  v-on:click="updateReviewFormToggle = review.review_id"
+                >
+                  Edit Review
+                </button>
+                <div v-if="updateReviewFormToggle === review.review_id">
+                  <form v-on:submit.prevent="updateReview(review)">
+                    <label>Text:</label>
+                    <input type="text" v-model="review.text" />
+                    <label>Rating:</label>
+                    <input type="text" v-model="review.rating" />
+                    <button
+                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      type="submit"
+                    >
+                      Update Review!!
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="btn btn-light btn-outline-secondary border-info mt-4"
+        v-on:click="reviewsFormToggle = !reviewsFormToggle"
+      >
+        Add a Review!
+      </button>
+      <div v-if="reviewsFormToggle === true">
+        <div class="row row-cols-1 g-4 gy-3 mt-1">
+          <div class="col">
+            <div class="card text-dark bg-light border-info">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+                <div class="card-text">
+                  <form v-on:submit="createReview()">
+                    <label>Review Description:</label>
+                    <input type="text" v-model="newText" />
+
+                    <label>Rating:</label>
+                    <input type="number" v-model="newRating" />
+
+                    <button
+                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      type="submit"
+                    >
+                      Submit Your Review!
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div v-if="updateProfessorFormToggle === true">
+        <form v-on:submit.prevent="updateProfessor()">
+          <label>First Name:</label>
+          <input type="text" v-model="professor.first_name" />
+
+          <label>Last Name:</label>
+          <input type="text" v-model="professor.last_name" />
+
+          <label>School:</label>
+          <input type="text" v-model="professor.school" />
+
+          <label>Department:</label>
+          <input type="text" v-model="professor.department" />
+
+          <label>Title:</label>
+          <input type="text" v-model="professor.title" />
+
+          <button
+            class="btn btn-light btn-outline-secondary border-info mt-4"
+            type="submit"
+          >
+            Update Professor!!
+          </button>
+        </form>
+      </div> -->
     </div>
   </div>
 </template>
