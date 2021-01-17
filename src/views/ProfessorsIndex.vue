@@ -1,8 +1,9 @@
 <template>
   <div class="professors-index">
     <div class="container">
+      
       <div class="row row-cols-1 row-cols-md-3 g-4 gy-3 mt-1">
-        <div class="col" v-for="professor in professors">
+        <div class="col" v-for="professor in orderBy(filterBy(professors, $parent.nameFilter), $parent.sortAttribute)" v-bind:key="professor.professor_id">
           <div class="card text-dark bg-light border-info">
             <div class="card-body">
               <h5 class="card-title">
@@ -29,11 +30,14 @@
 
 <script>
 import axios from "axios";
+import Vue2Filters from 'vue2-filters';
 
 export default {
   data: function() {
     return {
       professors: {},
+      nameFilter: "",
+      sortAttribute: "nameFilter",
       error: [],
     };
   },
@@ -42,6 +46,7 @@ export default {
       .get("/professors")
       .then((response) => (this.professors = response.data));
   },
+  mixins: [Vue2Filters.mixin],
   methods: {},
 };
 </script>
