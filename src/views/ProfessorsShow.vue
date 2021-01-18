@@ -1,18 +1,24 @@
 <template>
   <div class="professors-show">
     <div class="container text-center">
-      <div class="mt-3">
-        <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
-        <h3>Title: {{ professor.title }}</h3>
-        <h3>School: {{ professor.school }}</h3>
-        <h3>Department: {{ professor.department }}</h3>
-        <div v-if="updateProfessorFormToggle === false">
-          <button
-            class="btn btn-light btn-outline-secondary border-info mt-1"
-            v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle"
-          >
-            Update professor info
-          </button>
+      <div class="professor-info rounded">
+        <div class="mt-3">
+          <br />
+          <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
+          <h3>Title: {{ professor.title }}</h3>
+          <h3>School: {{ professor.school }}</h3>
+          <h3>Department: {{ professor.department }}</h3>
+          <div v-if="updateProfessorFormToggle === false">
+            <button
+              class="btn btn-light btn-outline-secondary border-info mt-1"
+              v-on:click="
+                updateProfessorFormToggle = !updateProfessorFormToggle
+              "
+            >
+              Update professor info
+            </button>
+          </div>
+          <br />
         </div>
       </div>
 
@@ -259,7 +265,11 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.professor-info {
+  background: #c0b7d89c;
+}
+</style>
 
 <script>
 import axios from "axios";
