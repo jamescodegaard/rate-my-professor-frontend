@@ -3,7 +3,7 @@
     <div class="container text-center">
       <div class="row row-cols-1 g-4 gy-3 mt-1">
         <div class="col">
-          <div class="card text-dark bg-light border-info">
+          <div class="card text-dark bg-light">
             <div class="card-body">
               <h2 class="card-title">Add a Professor</h2>
               <div class="card-text">
@@ -51,7 +51,7 @@
                     />
                   </div>
                   <button
-                    class="btn btn-light btn-outline-secondary border-info mt-4"
+                    class="btn btn-light btn-outline-secondary mt-4"
                     type="submit"
                   >
                     Create Professor
@@ -66,6 +66,15 @@
   </div>
 </template>
 
+<style>
+.col .card {
+  border-color: #9573f1;
+}
+
+.container button {
+  border-color: #9573f1;
+}
+</style>
 <script>
 import axios from "axios";
 

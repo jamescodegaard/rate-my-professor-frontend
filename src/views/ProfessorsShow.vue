@@ -10,7 +10,7 @@
           <h3>Department: {{ professor.department }}</h3>
           <div v-if="updateProfessorFormToggle === false">
             <button
-              class="btn btn-light btn-outline-secondary border-info mt-1"
+              class="btn btn-light btn-outline-secondary mt-1"
               v-on:click="
                 updateProfessorFormToggle = !updateProfessorFormToggle
               "
@@ -86,15 +86,12 @@
                       />
                     </div>
 
-                    <button
-                      class="btn btn-light btn-outline-secondary border-info mt-4"
-                      type="submit"
-                    >
+                    <button class="btn btn-light mt-4" type="submit">
                       Update Professor!!
                     </button>
                   </form>
                   <button
-                    class="btn btn-light btn-outline-secondary border-info mt-4"
+                    class="btn btn-light mt-4"
                     v-on:click="destroyProfessor()"
                   >
                     Delete this Professor
@@ -110,7 +107,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4 gy-3">
         <div class="col" v-for="review in professor.reviews">
-          <div class="card text-dark bg-light border-info">
+          <div class="card text-dark bg-light">
             <div class="card-body">
               <h5 class="card-title"></h5>
               <div class="card-text">
@@ -118,7 +115,7 @@
                 <p>{{ review.text }}</p>
                 <div v-if="updateReviewFormToggle === false">
                   <button
-                    class="btn btn-light btn-outline-secondary btn-sm border-info mt-2"
+                    class="btn btn-light btn-outline-secondary btn-sm mt-2"
                     v-on:click="
                       (updateReviewFormToggle = !updateReviewFormToggle),
                         (updateReviewID = review.review_id)
@@ -165,14 +162,14 @@
                       v-model="review.rating"
                     />
                     <button
-                      class="btn btn-light btn-outline-secondary btn-sm border-info mt-1"
+                      class="btn btn-light btn-outline-secondary btn-sm mt-1"
                       type="submit"
                     >
                       Update Review!!
                     </button>
                   </form>
                   <button
-                    class="btn btn-light btn-outline-secondary btn-sm border-info mt-2"
+                    class="btn btn-light btn-outline-secondary btn-sm mt-2"
                     v-on:click="destroyReview(review)"
                   >
                     Delete Review
@@ -184,7 +181,7 @@
         </div>
       </div>
       <button
-        class="btn btn-light btn-outline-secondary border-info mt-4"
+        class="btn btn-light btn-outline-secondary mt-4"
         v-on:click="reviewsFormToggle = !reviewsFormToggle"
       >
         Add a Review!
@@ -192,7 +189,7 @@
       <div v-if="reviewsFormToggle === true">
         <div class="row row-cols-1 g-4 gy-3 mt-1">
           <div class="col-md-12">
-            <div class="card text-dark bg-light border-info">
+            <div class="card text-dark bg-light">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <div class="card-text">
@@ -223,7 +220,7 @@
                     </div>
 
                     <button
-                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      class="btn btn-light btn-outline-secondary mt-4"
                       type="submit"
                     >
                       Submit Your Review!
@@ -267,7 +264,15 @@
 
 <style>
 .professor-info {
-  background: #c0b7d89c;
+  background: #b9aed89c;
+}
+
+.col .card {
+  border-color: #9573f1;
+}
+
+.container button {
+  border-color: #9573f1;
 }
 </style>
 

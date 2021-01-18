@@ -39,11 +39,11 @@
 
 <style>
 #nav {
-  background-color: #6ddaf0;
+  background-color: #9573f1;
 }
 
 #nav .navbar-brand {
-  color: rgb(94, 94, 94);
+  color: rgb(230, 230, 230);
 }
 
 #app {
