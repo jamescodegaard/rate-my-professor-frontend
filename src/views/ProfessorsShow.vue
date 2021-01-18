@@ -1,7 +1,7 @@
 <template>
   <div class="professors-show">
     <div class="container text-center h-100">
-      <div class="professor-info rounded">
+      <div class="professor-info rounded shadow">
         <div class="mt-3">
           <br />
           <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
@@ -10,7 +10,7 @@
           <h3>Department: {{ professor.department }}</h3>
           <div v-if="updateProfessorFormToggle === false">
             <button
-              class="btn btn-light btn-outline-secondary mt-1"
+              class="shadow btn btn-light btn-outline-secondary mt-1"
               v-on:click="
                 updateProfessorFormToggle = !updateProfessorFormToggle
               "
@@ -265,14 +265,18 @@
 <style>
 .professor-info {
   background: #b9aed89c;
+  border-radius: 10px;
+  border-color: #9573f1;
 }
 
 .col .card {
   border-color: #9573f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .container button {
   border-color: #9573f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 </style>
 
@@ -282,7 +286,9 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      professor: {},
+      professor: {
+        reviews: [],
+      },
       reviewsFormToggle: false,
       updateProfessorFormToggle: false,
       updateReviewFormToggle: false,
@@ -290,17 +296,26 @@ export default {
       newReview: "",
       newRating: "",
       newText: "",
+      averageRating: "",
       error: [],
     };
   },
   created: function() {
-    axios.get(`/professors/${this.$route.params.id}`).then((response) => {
-      console.log(response.data), (this.professor = response.data.professor[0]);
-    });
+    this.showProfessor();
   },
+  mounted: function() {
+    this.professorRating();
+  },
+
   methods: {
+    showProfessor: function() {
+      axios.get(`/professors/${this.$route.params.id}`).then((response) => {
+        console.log(response.data);
+        this.professor = response.data.professor[0];
+      });
+    },
     createReview: function() {
-      var params = {
+      let params = {
         professor_id: this.professor.professor_id,
         text: this.newText,
         rating: this.newRating,
@@ -314,6 +329,19 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    professorRating: function() {
+      let sumTotal = 0;
+      this.professor.reviews.forEach(function(index) {
+        console.log(index.rating);
+        sumTotal += index.rating;
+      });
+
+      this.averageRating = sumTotal / this.professor.reviews.length;
+      console.log("Average Rating:", this.averageRating);
+      if (!isNaN(this.averageRating)) {
+        this.averageRating = +this.averageRating.toFixed(1);
+      }
     },
     updateProfessor: function() {
       var params = {
