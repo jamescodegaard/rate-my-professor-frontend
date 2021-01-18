@@ -1,6 +1,6 @@
 <template>
   <div class="professors-show">
-    <div class="container text-center">
+    <div class="container text-center h-100">
       <div class="professor-info rounded">
         <div class="mt-3">
           <br />
@@ -25,7 +25,7 @@
       <div v-if="updateProfessorFormToggle === true">
         <div class="row row-cols-1 g-4 gy-3 mt-1">
           <div class="col">
-            <div class="card text-dark bg-light border-info">
+            <div class="card text-dark bg-light">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <div class="card-text">
@@ -107,7 +107,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4 gy-3">
         <div class="col" v-for="review in professor.reviews">
-          <div class="card text-dark bg-light">
+          <div class="card text-dark bg-light h-100">
             <div class="card-body">
               <h5 class="card-title"></h5>
               <div class="card-text">
@@ -115,7 +115,7 @@
                 <p>{{ review.text }}</p>
                 <div v-if="updateReviewFormToggle === false">
                   <button
-                    class="btn btn-light btn-outline-secondary btn-sm mt-2"
+                    class="btn btn-light btn-outline-secondary btn-sm mt-2 "
                     v-on:click="
                       (updateReviewFormToggle = !updateReviewFormToggle),
                         (updateReviewID = review.review_id)
