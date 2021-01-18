@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <nav class="navbar">
+      <nav class="navbar shadow">
         <div class="container-fluid">
           <router-link to="/professors" class="navbar-brand"
             >Professors</router-link
