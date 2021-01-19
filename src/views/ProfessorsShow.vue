@@ -4,10 +4,19 @@
       <div class="professor-info rounded shadow">
         <div class="mt-3">
           <br />
-          <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
-          <h3>Title: {{ professor.title }}</h3>
-          <h3>School: {{ professor.school }}</h3>
-          <h3>Department: {{ professor.department }}</h3>
+          <h1>
+            <strong
+              >{{ professor.first_name }} {{ professor.last_name }}</strong
+            >
+          </h1>
+          <h5>
+            Average Rating:
+            <strong>{{ this.averageRating }}</strong>
+          </h5>
+          <h3>{{ professor.school }}</h3>
+          <h3>{{ professor.title }}</h3>
+          <h3>{{ professor.department }}</h3>
+
           <div v-if="updateProfessorFormToggle === false">
             <button
               class="shadow btn btn-light btn-outline-secondary mt-1"
@@ -107,7 +116,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4 gy-3">
         <div class="col" v-for="review in professor.reviews">
-          <div class="card text-dark bg-light h-100">
+          <div class="card text-dark bg-light">
             <div class="card-body">
               <h5 class="card-title"></h5>
               <div class="card-text">
@@ -303,15 +312,14 @@ export default {
   created: function() {
     this.showProfessor();
   },
-  mounted: function() {
-    this.professorRating();
-  },
+  mounted: function() {},
 
   methods: {
     showProfessor: function() {
       axios.get(`/professors/${this.$route.params.id}`).then((response) => {
         console.log(response.data);
         this.professor = response.data.professor[0];
+        this.professorRating();
       });
     },
     createReview: function() {
@@ -333,15 +341,13 @@ export default {
     professorRating: function() {
       let sumTotal = 0;
       this.professor.reviews.forEach(function(index) {
-        console.log(index.rating);
         sumTotal += index.rating;
       });
-
       this.averageRating = sumTotal / this.professor.reviews.length;
-      console.log("Average Rating:", this.averageRating);
       if (!isNaN(this.averageRating)) {
         this.averageRating = +this.averageRating.toFixed(1);
       }
+      console.log("Average Rating:", this.averageRating);
     },
     updateProfessor: function() {
       var params = {

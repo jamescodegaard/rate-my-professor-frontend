@@ -10,9 +10,9 @@
                 {{ professor.first_name }} {{ professor.last_name }}
               </h5>
               <p class="card-text">
-                <div>University: {{ professor.school }}</div>
-                <div>Department: {{ professor.department }}</div>
-                <div>Title: {{ professor.title }}</div>
+                <div><h6>{{ professor.school }}</h6></div>
+                <div>{{ professor.department }}</div>
+                <!-- <div>Title: {{ professor.title }}</div> -->
                 <div>
                   <router-link :to="`/professors/${professor.professor_id}`" type="button" class="btn btn-light btn-outline-secondary mt-2">See Reviews</router-link>
                 </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-    <router-link to="/professors/new" type="button" class="btn btn-light btn-outline-secondary mt-4" >Add a professor!!</router-link>
+    <router-link to="/professors/new" type="button" class="shadow btn btn-light btn-outline-secondary mt-4" >Add a professor!!</router-link>
     </div>
   </div>
 </template>
