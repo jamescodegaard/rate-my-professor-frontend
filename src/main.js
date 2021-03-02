@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Vue2Filters from 'vue2-filters';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '/';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://rate-my-professors-backend.herokuapp.com/';
 
 Vue.config.productionTip = false
 
