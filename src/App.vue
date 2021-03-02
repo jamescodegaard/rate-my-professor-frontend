@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <nav class="navbar navbar-dark bg-info">
+      <nav class="navbar shadow">
         <div class="container-fluid">
           <router-link to="/professors" class="navbar-brand"
             >Professors</router-link
@@ -29,30 +29,29 @@
     </div>
 
     <router-view />
+    <footer>
+      <div>
+        <br />
+      </div>
+    </footer>
   </div>
 </template>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 #nav {
-  padding: 30px;
+  background-color: #9573f1;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#nav .navbar-brand {
+  color: rgb(230, 230, 230);
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
+#app {
+  background-color: #e0e0e0;
+  background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+  height: 100vh;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
 </style>
 
 <script>

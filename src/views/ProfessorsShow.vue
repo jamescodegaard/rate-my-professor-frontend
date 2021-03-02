@@ -1,25 +1,40 @@
 <template>
   <div class="professors-show">
-    <div class="container text-center">
-      <div class="mt-3">
-        <h1>{{ professor.first_name }} {{ professor.last_name }}</h1>
-        <h3>Title: {{ professor.title }}</h3>
-        <h3>School: {{ professor.school }}</h3>
-        <h3>Department: {{ professor.department }}</h3>
-        <div v-if="updateProfessorFormToggle === false">
-          <button
-            class="btn btn-light btn-outline-secondary border-info mt-1"
-            v-on:click="updateProfessorFormToggle = !updateProfessorFormToggle"
-          >
-            Update professor info
-          </button>
+    <div class="container text-center h-100">
+      <div class="professor-info rounded shadow">
+        <div class="mt-3">
+          <br />
+          <h1>
+            <strong
+              >{{ professor.first_name }} {{ professor.last_name }}</strong
+            >
+          </h1>
+          <h5>
+            Average Rating:
+            <strong>{{ this.averageRating }}</strong>
+          </h5>
+          <h3>{{ professor.school }}</h3>
+          <h3>{{ professor.title }}</h3>
+          <h3>{{ professor.department }}</h3>
+
+          <div v-if="updateProfessorFormToggle === false">
+            <button
+              class="shadow btn btn-light btn-outline-secondary mt-1"
+              v-on:click="
+                updateProfessorFormToggle = !updateProfessorFormToggle
+              "
+            >
+              Update professor info
+            </button>
+          </div>
+          <br />
         </div>
       </div>
 
       <div v-if="updateProfessorFormToggle === true">
         <div class="row row-cols-1 g-4 gy-3 mt-1">
           <div class="col">
-            <div class="card text-dark bg-light border-info">
+            <div class="card text-dark bg-light">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <div class="card-text">
@@ -80,15 +95,12 @@
                       />
                     </div>
 
-                    <button
-                      class="btn btn-light btn-outline-secondary border-info mt-4"
-                      type="submit"
-                    >
+                    <button class="btn btn-light mt-4" type="submit">
                       Update Professor!!
                     </button>
                   </form>
                   <button
-                    class="btn btn-light btn-outline-secondary border-info mt-4"
+                    class="btn btn-light mt-4"
                     v-on:click="destroyProfessor()"
                   >
                     Delete this Professor
@@ -104,7 +116,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3 g-4 gy-3">
         <div class="col" v-for="review in professor.reviews">
-          <div class="card text-dark bg-light border-info">
+          <div class="card text-dark bg-light">
             <div class="card-body">
               <h5 class="card-title"></h5>
               <div class="card-text">
@@ -112,7 +124,7 @@
                 <p>{{ review.text }}</p>
                 <div v-if="updateReviewFormToggle === false">
                   <button
-                    class="btn btn-light btn-outline-secondary btn-sm border-info mt-2"
+                    class="btn btn-light btn-outline-secondary btn-sm mt-2 "
                     v-on:click="
                       (updateReviewFormToggle = !updateReviewFormToggle),
                         (updateReviewID = review.review_id)
@@ -159,14 +171,14 @@
                       v-model="review.rating"
                     />
                     <button
-                      class="btn btn-light btn-outline-secondary btn-sm border-info mt-1"
+                      class="btn btn-light btn-outline-secondary btn-sm mt-1"
                       type="submit"
                     >
                       Update Review!!
                     </button>
                   </form>
                   <button
-                    class="btn btn-light btn-outline-secondary btn-sm border-info mt-2"
+                    class="btn btn-light btn-outline-secondary btn-sm mt-2"
                     v-on:click="destroyReview(review)"
                   >
                     Delete Review
@@ -178,7 +190,7 @@
         </div>
       </div>
       <button
-        class="btn btn-light btn-outline-secondary border-info mt-4"
+        class="btn btn-light btn-outline-secondary mt-4"
         v-on:click="reviewsFormToggle = !reviewsFormToggle"
       >
         Add a Review!
@@ -186,7 +198,7 @@
       <div v-if="reviewsFormToggle === true">
         <div class="row row-cols-1 g-4 gy-3 mt-1">
           <div class="col-md-12">
-            <div class="card text-dark bg-light border-info">
+            <div class="card text-dark bg-light">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <div class="card-text">
@@ -217,7 +229,7 @@
                     </div>
 
                     <button
-                      class="btn btn-light btn-outline-secondary border-info mt-4"
+                      class="btn btn-light btn-outline-secondary mt-4"
                       type="submit"
                     >
                       Submit Your Review!
@@ -259,7 +271,23 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.professor-info {
+  background: #b9aed89c;
+  border-radius: 10px;
+  border-color: #9573f1;
+}
+
+.col .card {
+  border-color: #9573f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container button {
+  border-color: #9573f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -267,7 +295,9 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      professor: {},
+      professor: {
+        reviews: [],
+      },
       reviewsFormToggle: false,
       updateProfessorFormToggle: false,
       updateReviewFormToggle: false,
@@ -275,17 +305,25 @@ export default {
       newReview: "",
       newRating: "",
       newText: "",
+      averageRating: "",
       error: [],
     };
   },
   created: function() {
-    axios.get(`/professors/${this.$route.params.id}`).then((response) => {
-      console.log(response.data), (this.professor = response.data.professor[0]);
-    });
+    this.showProfessor();
   },
+  mounted: function() {},
+
   methods: {
+    showProfessor: function() {
+      axios.get(`/professors/${this.$route.params.id}`).then((response) => {
+        console.log(response.data);
+        this.professor = response.data.professor[0];
+        this.professorRating();
+      });
+    },
     createReview: function() {
-      var params = {
+      let params = {
         professor_id: this.professor.professor_id,
         text: this.newText,
         rating: this.newRating,
@@ -299,6 +337,17 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    professorRating: function() {
+      let sumTotal = 0;
+      this.professor.reviews.forEach(function(index) {
+        sumTotal += index.rating;
+      });
+      this.averageRating = sumTotal / this.professor.reviews.length;
+      if (!isNaN(this.averageRating)) {
+        this.averageRating = +this.averageRating.toFixed(1);
+      }
+      console.log("Average Rating:", this.averageRating);
     },
     updateProfessor: function() {
       var params = {
